@@ -23,7 +23,7 @@ export default function DropoffForm({ stop, onSubmit, onClose }: DropoffFormProp
       return
     }
     try {
-      const { Camera } = await import('@capacitor/camera')
+      const { Camera, CameraResultType } = await import('@capacitor/camera')
       const { camera } = await Camera.requestPermissions()
       if (camera !== 'granted' && camera !== 'prompt') {
         setError('Camera permission required')
@@ -33,7 +33,7 @@ export default function DropoffForm({ stop, onSubmit, onClose }: DropoffFormProp
       const image = await Camera.getPhoto({
         quality: 80,
         allowEditing: false,
-        resultType: 'base64',
+        resultType: CameraResultType.Base64,
       })
       if (image.base64String) {
         setPhoto(`data:image/jpeg;base64,${image.base64String}`)
